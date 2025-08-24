@@ -1,10 +1,10 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 
-const props = defineProps({
-    users: {
-        type: Array,
+const { friend } = defineProps({
+    friend: {
+        type: Object,
         required: true
     }
 });
@@ -23,16 +23,9 @@ const props = defineProps({
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
-                    <div class="p-6 text-gray-900 dark:text-gray-100">
-                        <h3 class="mb-4 font-bold">Lista de Usuários</h3>
-
-                        <ul>
-                            <li v-for="user in props.users" :key="user.id" class="mb-2">
-                                <Link :href="route('chat', user.id)" class="text-blue-500 hover:underline">
-                                    {{ user.name }} ({{ user.email }})
-                                </Link>
-                            </li>
-                        </ul>
+                    <div class="p-6 text-gray-900 dark:text-gray-100 space-y-4">
+                        <p><strong>Nome:</strong> {{ friend.name }}</p>
+                        <p><strong>Email:</strong> {{ friend.email }}</p>
                     </div>
                 </div>
             </div>
