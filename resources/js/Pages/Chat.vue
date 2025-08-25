@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import ChatComponent from '@/Components/ChatComponent.vue';
 
 const { friend } = defineProps({
     friend: {
@@ -15,8 +16,8 @@ const { friend } = defineProps({
 
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                Dashboard
+            <h2 class="text-xl font-medium leading-tight text-gray-800 dark:text-gray-200">
+                {{ friend.name }} <span class="font-semibold">({{ friend.email }})</span>
             </h2>
         </template>
 
@@ -26,6 +27,8 @@ const { friend } = defineProps({
                     <div class="p-6 text-gray-900 dark:text-gray-100 space-y-4">
                         <p><strong>Nome:</strong> {{ friend.name }}</p>
                         <p><strong>Email:</strong> {{ friend.email }}</p>
+
+                        <ChatComponent />
                     </div>
                 </div>
             </div>
