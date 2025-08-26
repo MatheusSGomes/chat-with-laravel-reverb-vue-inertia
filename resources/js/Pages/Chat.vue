@@ -7,6 +7,10 @@ const { friend } = defineProps({
     friend: {
         type: Object,
         required: true
+    },
+    user: {
+        type: Object,
+        required: true
     }
 });
 </script>
@@ -28,7 +32,7 @@ const { friend } = defineProps({
                         <p><strong>Nome:</strong> {{ friend.name }}</p>
                         <p><strong>Email:</strong> {{ friend.email }}</p>
 
-                        <ChatComponent />
+                        <ChatComponent :friend="friend" :current-user="user"  />
                     </div>
                 </div>
             </div>

@@ -3,7 +3,7 @@
     <div class="flex flex-col justify-end h-80">
         <div class="p-4 overflow-y-auto max-h-fit">
             <div v-for="message in messages" :key="message.id" class="flex items-center mb-2">
-                <div v-if="message.isMe" class="p-2 ml-auto text-white bg-blue-500 rounded-lg">
+                <div v-if="message.sender_id == currentUser.id" class="p-2 ml-auto text-white bg-blue-500 rounded-lg">
                     {{ message.text }}
                 </div>
 
@@ -34,12 +34,21 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
+import {onMounted, ref} from "vue"
+import axios from "axios";
 
-const messages = ref([
-  { id: 1, text: "Hello", isMe: false },
-  { id: 2, text: "Hi there!", isMe: true },
-])
+const props = defineProps({
+    friend: {
+        type: Object,
+        required: true,
+    },
+    currentUser: {
+        type: Object,
+        required: true,
+    },
+});
+
+const messages = ref([])
 
 const newMessage = ref("")
 
@@ -53,4 +62,11 @@ function sendMessage() {
     newMessage.value = ""
   }
 }
+
+onMounted(() => {
+    axios.get(`/messages/${props.friend.id}`)
+        .then((response) => {
+            messages.value = response.data;
+        });
+});
 </script>
