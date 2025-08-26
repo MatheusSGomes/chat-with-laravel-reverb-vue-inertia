@@ -54,12 +54,13 @@ const newMessage = ref("")
 
 function sendMessage() {
   if (newMessage.value.trim() !== "") {
-    messages.value.push({
-      id: messages.value.length + 1,
-      text: newMessage.value,
-      isMe: true,
-    })
-    newMessage.value = ""
+      axios.post(`/messages/${props.friend.id}`, {
+          message: newMessage.value,
+      })
+      .then((response) => {
+          messages.value.push(response.data);
+          newMessage.value = "";
+      })
   }
 }
 

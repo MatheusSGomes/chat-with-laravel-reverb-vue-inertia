@@ -52,9 +52,9 @@ Route::get('/messages/{friend}', function (User $friend) {
         ->get();
 })->middleware(['auth'])->name('chat');;
 
-Route::post('/messages/{friend', function (User $friend) {
+Route::post('/messages/{friend}', function (User $friend) {
     return ChatMessage::create([
-        'receiver' => $friend->id,
+        'receiver_id' => $friend->id,
         'sender_id' => auth()->id(),
         'text' => request()->input('message'),
     ]);
