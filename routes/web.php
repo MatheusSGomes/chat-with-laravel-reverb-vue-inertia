@@ -30,7 +30,7 @@ Route::get('/chat/{friend}', function (User $friend) {
         'friend' => $friend,
         'user' => auth()->user()
     ]);
-})->middleware(['auth', 'verified'])->name('chat');;
+})->middleware(['auth', 'verified'])->name('chat');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -51,7 +51,7 @@ Route::get('/messages/{friend}', function (User $friend) {
         ->with(['sender', 'receiver'])
         ->orderBy('id', 'asc')
         ->get();
-})->middleware(['auth'])->name('chat');;
+})->middleware(['auth']);
 
 Route::post('/messages/{friend}', function (User $friend) {
     $message = ChatMessage::create([
