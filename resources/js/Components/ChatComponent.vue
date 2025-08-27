@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="flex flex-col justify-end h-80">
-            <div class="p-4 overflow-y-auto max-h-fit">
+            <div ref="messagesContainer" class="p-4 overflow-y-auto max-h-fit">
                 <div v-for="message in messages" :key="message.id" class="flex items-center mb-2">
                     <div v-if="message.sender_id == currentUser.id" class="p-2 ml-auto text-white bg-blue-500 rounded-lg">
                         {{ message.text }}
@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import {onMounted, ref} from "vue"
+import {nextTick, onMounted, ref, watch} from "vue"
 import axios from "axios";
 
 const props = defineProps({
@@ -52,9 +52,18 @@ const props = defineProps({
     },
 });
 
-const messages = ref([])
+const messages = ref([]);
+const newMessage = ref("");
+const messagesContainer = ref(null);
 
-const newMessage = ref("")
+watch(messages, () => {
+    nextTick(() => {
+        messagesContainer.value.scrollTo({
+            top: messagesContainer.value.scrollHeight,
+            behavior: "smooth"
+        });
+    });
+}, { deep: true });
 
 function sendMessage() {
   if (newMessage.value.trim() !== "") {
